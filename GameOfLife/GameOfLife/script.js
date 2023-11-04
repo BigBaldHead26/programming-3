@@ -167,3 +167,13 @@ function draw() {
         }
 }
 
+// const obj = {
+//         firstName: 'Karo',
+//         lastName: 'Mkrtchyan',
+//         age: 14,
+//         isStudent: true,
+//         showInfo() {
+//                 console.log(this.lastName, this.age);
+//         }
+// }
+// obj.showInfo();
