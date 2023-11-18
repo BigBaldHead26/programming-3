@@ -10,7 +10,7 @@ function matrixGenerator(matrixSize, grassCount, grassEaterCount, preadatorCount
         for (let i = 0; i < grassCount; i++) {
                 let x = Math.floor(Math.random() * matrixSize);
                 let y = Math.floor(Math.random() * matrixSize);
-                matrix[y][x] = 1
+                matrix[y][x] = 1;
         }
 
         // Randomly place two 2's in the matrix (only once)
@@ -18,27 +18,28 @@ function matrixGenerator(matrixSize, grassCount, grassEaterCount, preadatorCount
         for (let i = 0; i < grassEaterCount; i++) {
                 let x = Math.floor(Math.random() * matrixSize);
                 let y = Math.floor(Math.random() * matrixSize);
-                matrix[y][x] = 2
+                matrix[y][x] = 2;
         }
 
         //preadator
         for (let i = 0; i < preadatorCount; i++) {
                 let x = Math.floor(Math.random() * matrixSize)
                 let y = Math.floor(Math.random() * matrixSize)
-                matrix[y][x] = 3
+                matrix[y][x] = 3;
         }
 
         //venom
         for (let i = 0; i < venomCount; i++) {
                 let x = Math.floor(Math.random() * matrixSize)
                 let y = Math.floor(Math.random() * matrixSize)
-                matrix[y][x] = 4
+                matrix[y][x] = 4;
         }
 
+        //antivenom
         for (let i = 0; i < antivenomCount; i++) {
                 let x = Math.floor(Math.random() * matrixSize)
                 let y = Math.floor(Math.random() * matrixSize)
-                matrix[y][x] = 5
+                matrix[y][x] = 5;
         }
 
         return matrix;
@@ -46,6 +47,7 @@ function matrixGenerator(matrixSize, grassCount, grassEaterCount, preadatorCount
 
 let matrix = matrixGenerator(25, 70, 4, 2, 2, 8);
 let side = 25;
+// Grass
 let grassArray = [];
 // GrassEater
 let grassEaterArr = [];

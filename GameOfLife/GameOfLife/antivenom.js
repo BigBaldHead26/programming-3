@@ -1,68 +1,49 @@
-class Antivenom {
+let LivingCreature = require('../server/livingCreature')
+
+module.exports = class Antivenom extends LivingCreature{
     constructor(x,y){
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.energy = 50;
         this.direction = []
     }
 
-    getNewCoordinates() {
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
+    getNewCoordinates(directions) {
+        return super.getNewCoordinates(directions);
     }
 
     chooseCell(char4) {
         this.getNewCoordinates();
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == char4) {
-                    found.push(this.directions[i]);
-                }
-            }
-
-        }
-        return found;
+        return super.chooseCell(char4);
     }
 
     mul() {
-        let emptyCell = this.chooseCell(0)
-        let newCell = random(emptyCell)
+        let emptyCell = this.chooseCell(0);
+        let newCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
 
         if (newCell ) {
-            let newX = newCell[0]
-            let newY = newCell[1]
+            let newX = newCell[0];
+            let newY = newCell[1];
 
-            matrix[newY][newX] = 5
+            matrix[newY][newX] = 5;
 
-            let anv = new Antivenom(newX, newY)
+            let anv = new Antivenom(newX, newY);
 
-            antivenomArr.push(anv)
+            antivenomArr.push(anv);
         }
     }
 
     eat() {
-        let foods = this.chooseCell(4)
-        let food = random(foods)
+        let foods = this.chooseCell(4);
+        let food = foods[Math.floor(Math.random() * foods.length)];
         if (food) {
             this.energy++;
 
-            matrix[this.y][this.x] = 0
-            let newX = food[0]
-            let newY = food[1]
-            matrix[newY][newX] = 5
-            this.x = newX
-            this.y = newY
+            matrix[this.y][this.x] = 0;
+            let newX = food[0];
+            let newY = food[1];
+            matrix[newY][newX] = 5;
+            this.x = newX;
+            this.y = newY;
 
             for (var i in venomArr) {
                 if (newX == venomArr[i].x && newY == venomArr[i].y) {
@@ -73,25 +54,25 @@ class Antivenom {
 
         }
         else {
-            this.move()
+            this.move();
         }
     }
 
     move() {
-        this.energy--
-        let emptyCells = this.chooseCell(0)
-        let newCell = random(emptyCells)
+        this.energy--;
+        let emptyCells = this.chooseCell(0);
+        let newCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         if (newCell) {
-            let newX = newCell[0]
-            let newY = newCell[1]
-            matrix[this.y][this.x] = 0
-            matrix[newY][newX] = 5
-            this.x = newX
-            this.y = newY
+            let newX = newCell[0];
+            let newY = newCell[1];
+            matrix[this.y][this.x] = 0;
+            matrix[newY][newX] = 5;
+            this.x = newX;
+            this.y = newY;
         }
 
         if (this.energy <= 0) {
-            this.die()
+            this.die();
         }
     }
 

@@ -1,76 +1,34 @@
-class Preadator{
+let LivingCreature = require('../server/livingCreature')
+
+module.exports = class Preadator extends LivingCreature{
     constructor(x,y){
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.energy = 6;
         this.direction = []
     }
 
-    getNewCoordinates() {
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
+    getNewCoordinates(directions) {
+        return super.getNewCoordinates(directions);
     }
 
-
-    chooseCell(char1,char2) {
-        this.getNewCoordinates();
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-                 else if (matrix[y][x] == char1) {
-                    found.push(this.directions[i]);
-                } else if (matrix[y][x] == char2) {
-                    found.push(this.directions[i]);
-                }
-            }
-
-        }
-        return found;
-    }
     chooseCell(char1,char2){
         this.getNewCoordinates();
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == char1) {
-                    found.push(this.directions[i]);
-                } else if (matrix[y][x] == char2) {
-                    found.push(this.directions[i]);
-                }
-            }
-
-        }
-        return found;
+        return super.chooseCell(char1, char2);
     }
 
     mul() {
-        let emptyCell = this.chooseCell(0)
-        let newCell = random(emptyCell)
+        let emptyCell = this.chooseCell(0);
+        let newCell = emptyCell[Math.floor(Math.random() * emptyCells.length)];
 
         if (newCell ) {
-            let newX = newCell[0]
-            let newY = newCell[1]
+            let newX = newCell[0];
+            let newY = newCell[1];
 
-            matrix[newY][newX] = 3
+            matrix[newY][newX] = 3;
 
-            let pred = new Preadator(newX, newY)
+            let pred = new Preadator(newX, newY);
 
-            preadatorArr.push(pred)
+            preadatorArr.push(pred);
 
 
         }
@@ -78,16 +36,16 @@ class Preadator{
 
     eat() {
         let foods = this.chooseCell(1,2)
-        let food = random(foods)
+        let food = foods[Math.floor(Math.random() * foods.length)];
         if (food) {
             this.energy++;
 
-            matrix[this.y][this.x] = 0
-            let newX = food[0]
-            let newY = food[1]
-            matrix[newY][newX] = 3
-            this.x = newX
-            this.y = newY
+            matrix[this.y][this.x] = 0;
+            let newX = food[0];
+            let newY = food[1];
+            matrix[newY][newX] = 3;
+            this.x = newX;
+            this.y = newY;
 
             for (var i in grassArray) {
                 if (newX == grassArray[i].x && newY == grassArray[i].y) {
@@ -103,29 +61,29 @@ class Preadator{
                 }
             }
             if (this.energy >= 10) {
-                this.mul()
+                this.mul();
             }
         }
         else {
-            this.move()
+            this.move();
         }
     }
 
     move() {
-        this.energy--
-        let emptyCells = this.chooseCell(0)
-        let newCell = random(emptyCells)
+        this.energy--;
+        let emptyCells = this.chooseCell(0);
+        let newCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         if (newCell) {
-            let newX = newCell[0]
-            let newY = newCell[1]
-            matrix[this.y][this.x] = 0
-            matrix[newY][newX] = 3
-            this.x = newX
-            this.y = newY
+            let newX = newCell[0];
+            let newY = newCell[1];
+            matrix[this.y][this.x] = 0;
+            matrix[newY][newX] = 3;
+            this.x = newX;
+            this.y = newY;
         }
 
         if (this.energy <= 0) {
-            this.die()
+            this.die();
         }
     }
 
