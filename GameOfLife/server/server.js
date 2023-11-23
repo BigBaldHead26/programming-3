@@ -3,13 +3,14 @@ let app = express();
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
 let fs = require("fs");
-const Antivenom = require('../GameOfLife/antivenom');
-const Grass = require('../GameOfLife/grass');
-const GrassEater = require('../GameOfLife/grassEater');
-const Preadator = require('../GameOfLife/preadator');
-const Venom = require('../GameOfLife/venom');
+const Grass = require('./grass');
+const GrassEater = require('./grassEater');
+const Preadator = require('./preadator');
+const Venom = require('./venom');
+const Antivenom = require('./antivenom');
 
-app.use(express.static("."));
+
+app.use(express.static("../client"));
 
 app.get('/', function (req, res) {
     res.redirect('index.html');
@@ -33,7 +34,6 @@ function matrixGenerator(matrixSize, grassCount, grassEaterCount, preadatorCount
             matrix[y][x] = 1
     }
 
-    // Randomly place two 2's in the matrix (only once)
     //grasEater
     for (let i = 0; i < grassEaterCount; i++) {
             let x = Math.floor(Math.random() * matrixSize);
@@ -68,17 +68,17 @@ matrix = matrixGenerator(25, 70, 4, 2, 2, 8);
 
 io.sockets.emit('send matrix', matrix)
 
+// Grass = require("./grass");
+// GrassEater = require("./grassEater");
+// Preadator = require("./preadator");
+// Venom = require("./venom");
+// Antivenom = require("./antivenom");
+
 grassArray = [];
 grassEaterArr = [];
 preadatorArr = [];
 venomArr = [];
 antivenomArr = [];
-
-Grass = require('./grass');
-GrassEater = require('./grassEater');
-Preadator = require('./preadator');
-Venom = require('./venom');
-Antivenom = require('./antivenom');
 
 function createObject(matrix) {
     for (let y = 0; y < matrix.length; y++) {
@@ -116,6 +116,30 @@ function createObject(matrix) {
 }
 
 
-function gamePlay() {
-    
-}
+function game() {
+        for (var i in grassArray) {
+            grassArray[i].mul()
+        }
+        for (var i in grassEaterArr) {
+            grassEaterArr[i].eat();
+        }
+        for (var i in preadatorArr) {
+                preadatorArr[i].eat()
+        }
+        for (var i in venomArr) {
+                venomArr[i].eat();
+        }
+        for (var i in antivenomArr) {
+                antivenomArr[i].eat();
+        }
+        io.sockets.emit("send matrix", matrix);
+    }
+
+    setInterval(game, 1000)
+
+    io.on('connection', function () {
+        createObject(matrix)
+    })
+
+
+

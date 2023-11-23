@@ -1,47 +1,33 @@
-class Venom {
+let LivingCreature = require('./livingCreature')
+
+module.exports = class Venom extends LivingCreature{
     constructor(x,y){
-        this.x = x;
-        this.y = y;
+    super(x, y);
         this.energy = 30;
         this.direction = []
     }
 
     getNewCoordinates() {
         this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
+			[this.x - 1, this.y - 1],
+			[this.x, this.y - 1],
+			[this.x + 1, this.y - 1],
+			[this.x - 1, this.y],
+			[this.x + 1, this.y],
+			[this.x - 1, this.y + 1],
+			[this.x, this.y + 1],
+			[this.x + 1, this.y + 1]
+		];
     }
 
     chooseCell(char1,char2){
         this.getNewCoordinates();
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == char1) {
-                    found.push(this.directions[i]);
-                } 
-                if (matrix[y][x] == char2) {
-                    found.push(this.directions[i]);
-                } 
-         
-            }
-
-        }
-        return found;
+        return super.chooseCell(char1, char2);
     }
 
     mul() {
         let emptyCell = this.chooseCell(0)
-        let newCell = random(emptyCell)
+        let newCell = emptyCell[Math.floor(Math.random() * emptyCell.length)]
 
         if (newCell ) {
             let newX = newCell[0]
@@ -58,7 +44,7 @@ class Venom {
 
     eat() {
         let foods = this.chooseCell(1,2)
-        let food = random(foods)
+        let food = foods[Math.floor(Math.random() * foods.length)]
         if (food) {
             this.energy++;
 
