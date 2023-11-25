@@ -192,3 +192,53 @@ canvas{
         }
     }
 } */
+
+
+.btn__block{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.summer,
+.winter,
+.spring,
+.autumn{
+    width: 200px;
+    height: 50px;border-radius: 10px;
+    border: 1px solid black;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .4s;
+}
+
+.summer{
+    background: linear-gradient(50deg,coral,rgb(255, 166, 34));
+}
+.winter{
+    background: linear-gradient(50deg,rgb(142, 216, 250),rgb(34, 167, 255));
+}
+.spring{
+    background: linear-gradient(50deg,rgb(46, 172, 67),rgb(255, 38, 0));
+}
+.autumn{
+    background: linear-gradient(50deg,rgb(175, 196, 241),rgb(235, 220, 155));
+}
+
+.summer:hover{
+    opacity: 0.7;
+    color: white;
+}
+.winter:hover{
+    opacity: 0.7;
+    color: white;
+}
+.spring:hover{
+    opacity: 0.7;
+    color: white;
+}
+.autumn:hover{
+    opacity: 0.7;
+    color: white;
+}
